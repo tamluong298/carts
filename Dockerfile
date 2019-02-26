@@ -4,7 +4,7 @@ WORKDIR /opt/carts
 
 COPY . .
 
-RUN maven package \
+RUN mvn package \
     && mv target/carts.jar /run \
     && rm -rf *
 
