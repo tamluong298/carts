@@ -1,6 +1,14 @@
-FROM java:openjdk-8-alpine
+FROM schoolofdevops/carts-maven
 
-WORKDIR /usr/src/app
-COPY ./target/*.jar ./app.jar
+WORKDIR /opt/carts
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","./app.jar", "--port=80"]
+COPY . .
+
+RUN maven package \
+    && mv target/carts.jar /run \
+    && rm -rf *
+
+EXPOSE 80
+
+CMD java -jar /run/carts.jar --port=80
+
